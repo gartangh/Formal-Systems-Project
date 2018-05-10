@@ -1,0 +1,59 @@
+---------- MODULE Platform ----------
+
+(* Constants *)
+CONSTANTS const1, const1, ...
+
+(* Variables *)
+VARIABLES var1, var2, ...
+
+------------------------------------
+
+(* Sequence of variables *)
+vars == << var1, var2, ... >>
+
+(* Initialization *)
+Init ==	/\ var1 = ...
+		/\ var2 = ...
+		/\ ...
+
+(* Actions *)
+Action1(vars) ==	/\ ...
+					/\ ...
+					/\ ...
+
+Action2(vars) ==	/\ ...
+					/\ ...
+					/\ ...
+
+...
+
+(* Next state *)
+Next ==	\/ Action1(vars)
+		\/ Action2(vars)
+		\/ ...
+
+------------------------------------
+
+(* Liveness *)
+Live ==	/\ ...
+		/\ ...
+
+(* Specification *)
+Spec ==	/\ Init
+		/\ [][Next]_vars
+		/\ Live
+
+------------------------------------
+
+(* Invariants / Temporal properties to verify *)
+...
+
+(* Properties *)
+...
+
+------------------------------------
+
+(* Theorems *)
+THEOREM Spec => ...	
+
+====================================
