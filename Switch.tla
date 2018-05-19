@@ -1,61 +1,48 @@
 ---------- MODULE Switch ----------
-
-(* Constants *)
-CONSTANTS const1, const1, ...
-
 (* Variables *)
-VARIABLES state, var2, ...
+VARIABLES state
 
 ------------------------------------
 
 (* Sequence of variables *)
-vars == << state, var2, ... >>
+vars == << state >>
+States == {"first", "second"}
 
 (* Initialization *)
 Init ==	/\ state = "first"
-		/\ var2 = ...
-		/\ ...
 
 (* Actions *)
-Switch(state) ==	/\ ...
-					/\ ...
-					/\ state = "first" ? state' = "second" | state' = "first" /\ UNCHANGED var2
+Switch == state = "first" ? state' = "second" | state' = "first"
 
-Action2(vars) ==	/\ ...
-					/\ ...
-					/\ ...
+InFirstState == /\ state = "first"
+                /\ UNCHANGED state
 
-...
+InSecondState == /\ state = "second"
+                 /\ UNCHANGED state
 
-(* Next state *)
-Next ==	\/ Switch(state)
-		\/ Action2(vars)
-		\/ ...
+Next == Switch
 
 ------------------------------------
 
 (* Liveness *)
-Live ==	/\ ...
-		/\ ...
+Live == TRUE
 
 (* Specification *)
 Spec ==	/\ Init
-		/\ [][Next]_vars
+        /\ [][Next]_vars
 		/\ Live
 
 ------------------------------------
 
 (* Invariants / Temporal properties to verify *)
-TypeInvariant == state \in {"first", "second"}
-
-...
+TypeInvariant == state \in States
 
 (* Properties *)
-...
+
 
 ------------------------------------
 
 (* Theorems *)
-THEOREM Spec => ...	
+THEOREM Spec => []TypeInvariant
 
 ====================================

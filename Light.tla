@@ -1,64 +1,62 @@
 ---------- MODULE Light ----------
-
-(* Constants *)
-CONSTANTS const1, const1, ...
-
 (* Variables *)
-VARIABLES color, var2, ...
+VARIABLES color
 
 ------------------------------------
 
 (* Sequence of variables *)
-vars == << color, var2, ... >>
+vars == << color >>
+Colors = {"red", "yellow", "green"}
 
 (* Initialization *)
-Init ==	/\ color = "red"
-		/\ var2 = ...
-		/\ ...
+Init == /\ color = "green"
 
 (* Actions *)
-Action1(vars) ==	/\ ...
-					/\ ...
-					/\ ...
+SetGreen == color' = "green"
 
-Action2(vars) ==	/\ ...
-					/\ ...
-					/\ ...
+SetYellow == color' = "yellow"
 
-...
+SetRed == color' = "red"
 
-(* Next state *)
-Next ==	\/ Action1(vars)
-		\/ Action2(vars)
-		\/ ...
+IsGreen == /\ color = "green"
+           /\ UNCHANGED vars
+
+IsYellow == /\ color = "yellow"
+            /\ UNCHANGED vars
+
+IsRed == /\ color = "red"
+         /\ UNCHANGED vars
+
+Next == \/ SetGreen
+        \/ SetYellow
+        \/ SetRed
 
 ------------------------------------
 
 (* Liveness *)
-Live ==	/\ ...
-		/\ ...
+Live ==	TRUE
 
 (* Specification *)
-Spec ==	/\ Init
-		/\ [][Next]_vars
-		/\ Live
+Spec == /\ Init
+        /\ [][Next]_vars
+        /\ Live
+
 
 ------------------------------------
 
 (* Invariants / Temporal properties to verify *)
-TypeInvariant == color \in {"red", "yellow", "green"}
+TypeInvariant == color \in Colors
 	(*
 		"red":		the train must stop
 		"yellow":	the train can continue, but the next light will be red
-		"green":		the train cna continue and the nixt light will be yellow or green
-	*)
+		"green":	the train cna continue and the next light will be yellow or green
+	*)  
 
 (* Properties *)
-...
 
 ------------------------------------
 
 (* Theorems *)
-THEOREM Spec => ...	
+THEOREM Spec => []TypeInvariant	
 
 ====================================
