@@ -331,9 +331,10 @@ TypeInvariant == /\ \A l \in lights: l!TypeInvariant
                  /\ \A l \in outtracks: l!TypeInvariant
                  /\ \A l \in platforms: l!TypeInvariant
                  /\ \A l \in busys: l!TypeInvariant
+
 (* Properties *)
 (* Niet permanent alles op rood *)
-NotPermanentEverythingRed == ~(<>[](LCW!IsRed /\ LGE!IsRed)) (* TODO Add LAW *)
+(* NotPermanentEverythingRed == ~(<>[](LCW!IsRed /\ LGE!IsRed)) (* TODO Add LAW *) *)
 
 ------------------------------------
 

@@ -52,7 +52,8 @@ TrainEnters(platform, destination) ==   /\ targetDestination = "empty"
                                         /\ targetDestination' = destination
                                         /\ count' = count+1
    
-Next == \/ NewTrain
+Next == \/ NewTrain("C")
+        \/ NewTrain("G")
         \/ TrainLeaves
         \/ \E platform \in Platforms : \E destination \in OutTracks : TrainEnters(platform, destination)
 

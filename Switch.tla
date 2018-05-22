@@ -17,12 +17,6 @@ SwitchFirst == state' = "first"
 
 SwitchSecond == state' = "second" 
 
-InFirstState == /\ state = "first"
-                /\ UNCHANGED state
-
-InSecondState == /\ state = "second"
-                 /\ UNCHANGED state
-
 Next == \/ SwitchFirst
         \/ SwitchSecond
 
