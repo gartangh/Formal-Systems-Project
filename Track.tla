@@ -65,7 +65,7 @@ Spec == /\ Init
 
 ------------------------------------
 
-IsGoodCount ==	\/ count = 0
+IsGoodCount ==  \/ count = 0
                 \/ count = 1
 
 (* Invariants / Temporal properties to verify *)

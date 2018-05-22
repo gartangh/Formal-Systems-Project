@@ -1,5 +1,7 @@
 ---------- MODULE Light ----------
 
+EXTENDS Naturals
+
 (* Variables *)
 VARIABLES color
 

@@ -1,5 +1,5 @@
 ---------- MODULE Switch ----------
-
+EXTENDS Naturals
 (* Variables *)
 VARIABLES state
 
