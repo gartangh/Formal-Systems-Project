@@ -9,7 +9,7 @@ vars == << color >>
 Colors = {"red", "yellow", "green"}
 
 (* Initialization *)
-Init == /\ color = "green"
+Init == color = "green"
 
 (* Actions *)
 SetGreen == color' = "green"
@@ -41,7 +41,6 @@ Spec == /\ Init
         /\ [][Next]_vars
         /\ Live
 
-
 ------------------------------------
 
 (* Invariants / Temporal properties to verify *)
@@ -50,13 +49,11 @@ TypeInvariant == color \in Colors
 		"red":		the train must stop
 		"yellow":	the train can continue, but the next light will be red
 		"green":	the train cna continue and the next light will be yellow or green
-	*)  
-
-(* Properties *)
+	*)
 
 ------------------------------------
 
 (* Theorems *)
-THEOREM Spec => []TypeInvariant	
+THEOREM Spec => []TypeInvariant
 
 ====================================
