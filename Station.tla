@@ -3,12 +3,14 @@
 EXTENDS Naturals
 
 (* ---------------------------------------- VARIABLES ---------------------------------------- *)
-VARIABLES busyA, busyB, busyC, busyD, busyF, busyG, busyH, targetPlatformC, targetPlatformD, targetPlatformF, targetPlatformG, targetDestinationC, targetDestinationD, targetDestinationF, targetDestinationG, targetPlatformP1, targetPlatformP2, targetPlatformP3, targetPlatformP4, targetDestinationP1, targetDestinationP2, targetDestinationP3, targetDestinationP4,
-          colorLAW, colorLBW,colorLCW,colorLDW,colorLFE, colorLGE, colorL1E,colorL2E, colorL3E, colorL4E, colorL1W, colorL2W, colorL3W, colorL4W,
-          stateSA1,stateSA2, stateSB1,stateSB2, stateSC2, stateSC3,stateSD1,stateSD2, stateSF1, stateSG1, stateSH1,
-          countC, countD, countF, countG, countP1, countP2, countP3, countP4
+VARIABLES busyA, busyB, busyC, busyD, busyF, busyG, busyH, targetPlatformA, targetPlatformB,targetPlatformC, targetPlatformD, targetPlatformF, targetPlatformG, targetDestinationA, targetDestinationB,targetDestinationC, targetDestinationD, targetDestinationF, targetDestinationG, targetPlatformP1, targetPlatformP2, targetPlatformP3, targetPlatformP4, targetDestinationP1, targetDestinationP2, targetDestinationP3, targetDestinationP4,
+          (*colorLAW, colorLBW,*)colorLCW,(*colorLDW,colorLFE,*) colorLGE, colorL1E,colorL2E, colorL3E, colorL4E, colorL1W, colorL2W, colorL3W, colorL4W,
+          (*stateSA1,*)stateSA2, (*stateSB1,*)stateSB2, stateSC2, stateSC3,stateSD1,stateSD2, stateSF1, stateSG1, stateSH1,
+          countA, countB,countC, countD, countF, countG, countP1, countP2, countP3, countP4
+
 LCW == INSTANCE Light WITH color <- colorLCW
 LGE == INSTANCE Light WITH color <- colorLGE
+L1E == INSTANCE Light WITH color <- colorL1E
 L2E == INSTANCE Light WITH color <- colorL2E
 L3E == INSTANCE Light WITH color <- colorL3E
 L4E == INSTANCE Light WITH color <- colorL4E
@@ -20,12 +22,16 @@ L4W == INSTANCE Light WITH color <- colorL4W
 SA2 == INSTANCE Switch WITH state <- stateSA2
 SB2 == INSTANCE Switch WITH state <- stateSB2
 SC2 == INSTANCE Switch WITH state <- stateSC2
+SC3 == INSTANCE Switch WITH state <- stateSC3
 SD1 == INSTANCE Switch WITH state <- stateSD1
+SD2 == INSTANCE Switch WITH state <- stateSD2
 SF1 == INSTANCE Switch WITH state <- stateSF1 
 SG1 == INSTANCE Switch WITH state <- stateSG1
 SH1 == INSTANCE Switch WITH state <- stateSH1
 
 (* Tracks and platforms *)
+A == INSTANCE Track WITH targetPlatform <- targetPlatformA, targetDestination <- targetDestinationA, count <- countA
+B == INSTANCE Track WITH targetPlatform <- targetPlatformB, targetDestination <- targetDestinationB, count <- countB
 C == INSTANCE Track WITH targetPlatform <- targetPlatformC, targetDestination <- targetDestinationC, count <- countC
 D == INSTANCE Track WITH targetPlatform <- targetPlatformD, targetDestination <- targetDestinationD, count <- countD
 F == INSTANCE Track WITH targetPlatform <- targetPlatformF, targetDestination <- targetDestinationF, count <- countF
@@ -35,19 +41,23 @@ P2 == INSTANCE Track WITH targetPlatform <- targetPlatformP2, targetDestination 
 P3 == INSTANCE Track WITH targetPlatform <- targetPlatformP3, targetDestination <- targetDestinationP3, count <- countP3
 P4 == INSTANCE Track WITH targetPlatform <- targetPlatformP4, targetDestination <- targetDestinationP4, count <- countP4
 
-(* Sequences of variables *)
-lights == << LCW, LGE, L2E, L3E, L4E, L1W, L2W, L3W, L4W >>
+(* Sequences of variables 
+lights == {LCW, LGE, L2E, L3E, L4E, L1W, L2W, L3W, L4W}
 switches == << SA2, SB2, SC2, SC3, SD1, SD2, SF1, SG1, SH1 >>
 intracks == << C, F >>
 outtracks == << D, G >>
-platforms == << P1, P2, P3, P4 >>
+platforms == << P1, P2, P3, P4 >>*)
 busys == << busyA, busyB, busyC, busyD, busyF, busyG, busyH >>
-vars ==	<< lights, switches, intracks, outtracks, platforms, busys >>
+vars ==	<< busys,targetPlatformA, targetPlatformB,targetPlatformC, targetPlatformD, targetPlatformF, targetPlatformG, targetDestinationA, targetDestinationB,targetDestinationC, targetDestinationD, targetDestinationF, targetDestinationG, targetPlatformP1, targetPlatformP2, targetPlatformP3, targetPlatformP4, targetDestinationP1, targetDestinationP2, targetDestinationP3, targetDestinationP4,
+          (*colorLAW, colorLBW,*)colorLCW,(*colorLDW,colorLFE,*) colorLGE, colorL1E,colorL2E, colorL3E, colorL4E, colorL1W, colorL2W, colorL3W, colorL4W,
+          (*stateSA1,*)stateSA2, (*stateSB1,*)stateSB2, stateSC2, stateSC3,stateSD1,stateSD2, stateSF1, stateSG1, stateSH1,
+          countA, countB,countC, countD, countF, countG, countP1, countP2, countP3, countP4 >>
 
 (* ---------------------------------------- INITIALISATION ---------------------------------------- *)
 
 Init == /\ LCW!Init
         /\ LGE!Init
+        /\ L1E!Init
         /\ L2E!Init
         /\ L3E!Init
         /\ L4E!Init
@@ -64,6 +74,8 @@ Init == /\ LCW!Init
         /\ SF1!Init
         /\ SG1!Init
         /\ SH1!Init
+        /\ A!Init
+        /\ B!Init
         /\ C!Init
         /\ D!Init
         /\ F!Init
@@ -80,12 +92,12 @@ Init == /\ LCW!Init
 
 SetPathCtoP1 == /\ busyA = 0 /\ busyB = 0 /\ busyC = 0
                 /\ busyA' = 1 /\ busyB' = 1 /\ busyC' = 1 /\ UNCHANGED << busyA, busyF, busyG, busyH >>
-                /\ SC2!SwitchSecond /\ SB1!SwitchFirst /\ SA1!SwitchSecond
+                /\ SC2!SwitchSecond /\ SB2!SwitchFirst /\ SA2!SwitchSecond
                 /\ LCW!SetGreen
                 
 SetPathCtoP2 == /\ busyB = 0 /\ busyC = 0
                 /\ busyB' = 1 /\ busyC' = 1 /\ UNCHANGED << busyA, busyD, busyF, busyG, busyH >> 
-                /\ SC2!SwitchSecond /\ SB1!SwitchSecond
+                /\ SC2!SwitchSecond /\ SB2!SwitchSecond
                 /\ LCW!SetGreen
 
 SetPathCtoP3 == /\ busyC = 0 
@@ -93,7 +105,7 @@ SetPathCtoP3 == /\ busyC = 0
                 /\ SC2!SwitchFirst /\ SC3!SwitchFirst
                 /\ LCW!SetGreen
 
-setPathCtoP4 == /\ busyC = 0 /\ busyD = 0 
+SetPathCtoP4 == /\ busyC = 0 /\ busyD = 0 
                 /\ busyC' = 1 /\ busyD'=1 /\ UNCHANGED << busyA, busyB, busyF, busyG, busyH >>
                 /\ SC2!SwitchFirst /\ SC3!SwitchSecond /\ SD2!SwitchSecond
                 /\ LCW!SetGreen
@@ -128,12 +140,11 @@ SetPathG == /\ targetDestinationG # "empty"
 
 (* ---------------------------------------- SET PATH FROM PLATFORMS FROM EAST ---------------------------------------- *)
 
-(*
 SetPathP1toD == /\ busyA = 0 /\ busyB = 0 /\ busyC = 0 /\ busyD = 0
                 /\ busyA' = 1 /\ busyB' = 1 /\ busyC' = 1 /\ busyD' = 0 /\ UNCHANGED << busyF, busyG, busyH >>
-                /\ SA1!SwitchSecond /\ SB2!SwitchFirst /\ SC2!SwitchFirst /\ SD2!SwitchSecond
+                /\ SA2!SwitchSecond /\ SB2!SwitchFirst /\ SC2!SwitchFirst /\ SD2!SwitchSecond
                 /\ L1E!SetGreen
-*)
+
 
 SetPathP2toD == /\ busyB = 0 /\ busyC = 0 /\ busyD = 0
                 /\ busyB' = 1 /\ busyC' = 1 /\ busyD' = 1 /\ UNCHANGED << busyA,busyF, busyG, busyH >>
@@ -142,7 +153,7 @@ SetPathP2toD == /\ busyB = 0 /\ busyC = 0 /\ busyD = 0
 
 SetPathP3toD == /\ busyC = 0 /\ busyD = 0
                 /\ busyC' = 1 /\ busyD' = 1 /\ UNCHANGED << busyA, busyB, busyF, busyG, busyH >>
-                /\ SC2!SwitchFirst /\ SD1!SwitchSecond /\ SC3!SetFirst
+                /\ SC2!SwitchFirst /\ SD1!SwitchSecond /\ SC3!SwitchFirst
                 /\ L3E!SetGreen
 
 SetPathP4toD == /\ busyD = 0
@@ -151,16 +162,16 @@ SetPathP4toD == /\ busyD = 0
                 /\ L4E!SetGreen
 
 SetPathP1E ==   /\ targetDestinationP1 # "empty"
-                /\  \/ (destinationPlatformP1 = "D" /\ targetDestinationD="empty" /\ SetPathP1toD)
+                /\  \/ (targetDestinationP1 = "D" /\ targetDestinationD="empty" /\ SetPathP1toD)
 
 SetPathP2E ==   /\ targetDestinationP2 # "empty"
-                /\  \/ (destinationPlatformP2 = "D" /\ targetDestinationD="empty" /\ SetPathP2toD)
+                /\  \/ (targetDestinationP2 = "D" /\ targetDestinationD="empty" /\ SetPathP2toD)
 
 SetPathP3E ==   /\ targetDestinationP3 # "empty"
-                /\  \/ (destinationPlatformP3 = "D" /\ targetDestinationD="empty" /\ SetPathP3toD)
+                /\  \/ (targetDestinationP3 = "D" /\ targetDestinationD="empty" /\ SetPathP3toD)
 
-SetPathP4 ==    /\ targetDestinationP4 # "empty"
-                /\  \/ (destinationPlatformP4 = "D" /\ targetDestinationD="empty" /\ SetPathP4toD)
+SetPathP4E ==    /\ targetDestinationP4 # "empty"
+                /\  \/ (targetDestinationP4 = "D" /\ targetDestinationD="empty" /\ SetPathP4toD)
 
 (* ---------------------------------------- SET PATH FROM PLATFORMS FROM WEST ---------------------------------------- *)
                                
@@ -185,16 +196,16 @@ SetPathP4toF == /\ busyH = 0 /\ busyG = 0 /\ busyF = 0
                 /\ L4W!SetGreen
 
 SetPathP1W ==   /\ targetDestinationP1 # "empty"
-                /\   \/ (destinationPlatformP1 = "F" /\ targetDestinationF="empty" /\ SetPathP1toF)
+                /\   \/ (targetDestinationP1 = "F" /\ targetDestinationF="empty" /\ SetPathP1toF)
 
 SetPathP2W ==   /\ targetDestinationP2 # "empty"
-                /\   \/ (destinationPlatformP2 = "F" /\ targetDestinationF="empty" /\ SetPathP2toF)
+                /\   \/ (targetDestinationP2 = "F" /\ targetDestinationF="empty" /\ SetPathP2toF)
 
 SetPathP3W ==   /\ targetDestinationP3 # "empty"
-                /\ \/ (destinationPlatformP3 = "F" /\ targetDestinationF="empty" /\ SetPathP3toF)
+                /\ \/ (targetDestinationP3 = "F" /\ targetDestinationF="empty" /\ SetPathP3toF)
 
 SetPathP4W ==   /\ targetDestinationP4 # "empty"
-                /\ \/ (destinationPlatformP4 = "F" /\ targetDestinationF="empty" /\ SetPathP4toF)
+                /\ \/ (targetDestinationP4 = "F" /\ targetDestinationF="empty" /\ SetPathP4toF)
 
 (* ---------------------------------------- LEAVING TRAINS ---------------------------------------- *)
 
@@ -298,13 +309,19 @@ Spec == /\ Init
 
 ------------------------------------
 
-(* Invariants / Temporal properties to verify *)
+(* Invariants / Temporal properties to verify 
 TypeInvariant == /\ \A l \in lights: l!TypeInvariant
                  /\ \A l \in switches: l!TypeInvariant
                  /\ \A l \in intracks: l!TypeInvariant
                  /\ \A l \in outtracks: l!TypeInvariant
                  /\ \A l \in platforms: l!TypeInvariant
-                 /\ \A l \in busys: l!TypeInvariant
+                 /\ \A l \in busys: l!TypeInvariant*)
+
+TypeInvariant == /\ LCW!TypeInvariant /\ LGE!TypeInvariant /\ L2E!TypeInvariant /\ L3E!TypeInvariant /\ L1W!TypeInvariant /\ L2W!TypeInvariant /\ L3W!TypeInvariant /\ L4W!TypeInvariant
+                 /\ SA2!TypeInvariant /\ SB2!TypeInvariant /\ SC2!TypeInvariant /\ SC3!TypeInvariant /\ SD1!TypeInvariant /\ SD2!TypeInvariant /\ SF1!TypeInvariant /\ SG1!TypeInvariant /\ SH1!TypeInvariant
+                 /\ C!TypeInvariant /\ F!TypeInvariant
+                 /\ D!TypeInvariant /\ G!TypeInvariant
+                 /\ P1!TypeInvariant /\ P2!TypeInvariant /\ P3!TypeInvariant /\ P4!TypeInvariant   
 
 (* Properties *)
 (* Niet permanent alles op rood *)
