@@ -23,7 +23,8 @@ InFirstState == /\ state = "first"
 InSecondState == /\ state = "second"
                  /\ UNCHANGED state
 
-Next == SwitchState
+Next == \/ SwitchFirst
+        \/ SwitchSecond
 
 ------------------------------------
 
