@@ -1,4 +1,5 @@
 ---------- MODULE Switch ----------
+
 (* Variables *)
 VARIABLES state
 
@@ -9,10 +10,12 @@ vars == << state >>
 States == {"first", "second"}
 
 (* Initialization *)
-Init ==	/\ state = "first"
+Init ==	state = "first"
 
 (* Actions *)
-Switch == state = "first" ? state' = "second" | state' = "first"
+SwitchFirst == state' = "first" 
+
+SwitchSecond == state' = "second" 
 
 InFirstState == /\ state = "first"
                 /\ UNCHANGED state
@@ -20,25 +23,18 @@ InFirstState == /\ state = "first"
 InSecondState == /\ state = "second"
                  /\ UNCHANGED state
 
-Next == Switch
+Next == SwitchState
 
 ------------------------------------
-
-(* Liveness *)
-Live == TRUE
 
 (* Specification *)
 Spec ==	/\ Init
         /\ [][Next]_vars
-		/\ Live
 
 ------------------------------------
 
 (* Invariants / Temporal properties to verify *)
 TypeInvariant == state \in States
-
-(* Properties *)
-
 
 ------------------------------------
 
