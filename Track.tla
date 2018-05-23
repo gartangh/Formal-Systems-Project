@@ -10,12 +10,12 @@ VARIABLES targetPlatform, targetDestination, count
 (* Sequence of variables *)
 vars == << targetPlatform, targetDestination, count >>
 
-EastOriginOutTracks == {"D"} (* TODO: "B" has to be added *)
+EastOriginOutTracks == {"D", "B"}
 WestOriginOutTracks == {"F"}
 OutTracks == EastOriginOutTracks \union WestOriginOutTracks
 
 EastOriginInTracks == {"G"}
-WestOriginInTracks == {"C"} (* TODO: "A" has to be added *)
+WestOriginInTracks == {"C", "A"}
 InTracks == EastOriginInTracks \union WestOriginInTracks
 
 Platforms == {"P1", "P2", "P3", "P4"}
@@ -32,27 +32,30 @@ Init == /\ targetPlatform = "empty"
 
 (* Actions *)
 NewTrain(track) ==  /\ targetDestination = "empty" /\ targetPlatform = "empty"
-                    /\  \/ track # "G" /\ LET s == CHOOSE x \in Platforms : TRUE
-                                           IN targetPlatform' = s
-                        \/ track = "G" /\ LET s == CHOOSE x \in GPlatforms : TRUE
-                                           IN targetPlatform' = s
-                    /\  \/ track \in EastOriginInTracks /\ LET s == CHOOSE x \in EastOriginOutTracks : TRUE
-                                                           IN targetDestination' = s
-                        \/ track \in WestOriginInTracks /\ LET s == CHOOSE x \in WestOriginOutTracks : TRUE
-                                                           IN targetDestination' = s
-                    /\ count' = count+1
+                    /\  \/ track # "G" /\   \/  targetPlatform' = "P1"
+                                            \/  targetPlatform' = "P2"
+                                            \/  targetPlatform' = "P3"
+                                            \/  targetPlatform' = "P4"
+                        \/ track = "G" /\   \/  targetPlatform' = "P2"
+                                            \/  targetPlatform' = "P3"
+                                            \/  targetPlatform' = "P4"
+                    /\  \/ track \in EastOriginInTracks /\  \/ targetDestination' = "D"
+                                                            \/ targetDestination' = "B"
+                        \/ track \in WestOriginInTracks /\ targetDestination' = "F"
+                    /\ count' = count + 1
 
 TrainLeaves ==  /\ targetDestination # "empty" /\ targetPlatform # "empty"
                 /\ targetPlatform' = "empty"
                 /\ targetDestination' = "empty"
-                /\ count' = count-1
+                /\ count' = count - 1
 
 TrainEnters(platform, destination) ==   /\ targetDestination = "empty"
                                         /\ targetPlatform' = platform
                                         /\ targetDestination' = destination
-                                        /\ count' = count+1
+                                        /\ count' = count + 1
    
-Next == \/ NewTrain("C")
+Next == \/ NewTrain("A")
+        \/ NewTrain("C")
         \/ NewTrain("G")
         \/ TrainLeaves
         \/ \E platform \in Platforms : \E destination \in OutTracks : TrainEnters(platform, destination)
