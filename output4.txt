@@ -1,0 +1,28 @@
+TLC2 Version 2.12 of 29 January 2018
+Running breadth-first search Model-Checking with 1 worker on 8 cores with 3625MB heap and 64MB offheap memory (Windows 10 10.0 amd64, Oracle Corporation 1.8.0_162 x86_64).
+Parsing file D:\Documents\Universiteit\Bachelor3\FormeleSysteemmodelleringVoorSoftware\FS_Project\Station.tla
+Parsing file D:\Windows\Program Files\TLA 2.12\tla2sany\StandardModules\Naturals.tla
+Parsing file D:\Documents\Universiteit\Bachelor3\FormeleSysteemmodelleringVoorSoftware\FS_Project\Light.tla
+Parsing file D:\Documents\Universiteit\Bachelor3\FormeleSysteemmodelleringVoorSoftware\FS_Project\Switch.tla
+Parsing file D:\Documents\Universiteit\Bachelor3\FormeleSysteemmodelleringVoorSoftware\FS_Project\Track.tla
+Semantic processing of module Naturals
+Semantic processing of module Light
+Semantic processing of module Switch
+Semantic processing of module Track
+Semantic processing of module Station
+Starting... (2018-05-23 16:11:56)
+Computing initial states...
+Finished computing initial states: 1 distinct state generated.
+Warning: The variable busyC was changed while it is specified as UNCHANGED at
+line 115, col 47 to line 115, col 51 of module Station
+(Use the -nowarning option to disable this warning.)
+Progress(17) at 2018-05-23 16:11:59: 191509 states generated (191,509 s/min), 65802 distinct states found (65,802 ds/min), 20324 states left on queue.
+Model checking completed. No error has been found.
+  Estimates of the probability that TLC did not check all reachable states
+  because two distinct states had the same fingerprint:
+  calculated (optimistic):  val = 1.2E-7
+  based on the actual fingerprints:  val = 1.3E-7
+3452541 states generated, 856107 distinct states found, 0 states left on queue.
+The depth of the complete state graph search is 41.
+The average outdegree of the complete state graph is 1 (minimum is 0, the maximum 7 and the 95th percentile is 3).
+Finished in 40s at (2018-05-23 16:12:36)

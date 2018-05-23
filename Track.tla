@@ -32,14 +32,16 @@ Init == /\ targetPlatform = "empty"
 
 (* Actions *)
 NewTrain(track) ==  /\ targetDestination = "empty" /\ targetPlatform = "empty"
-                    /\  \/ track # "G" /\ LET s == CHOOSE x \in Platforms : TRUE
-                                           IN targetPlatform' = s
-                        \/ track = "G" /\ LET s == CHOOSE x \in GPlatforms : TRUE
-                                           IN targetPlatform' = s
-                    /\  \/ track \in EastOriginInTracks /\ LET s == CHOOSE x \in EastOriginOutTracks : TRUE
-                                                           IN targetDestination' = s
-                        \/ track \in WestOriginInTracks /\ LET s == CHOOSE x \in WestOriginOutTracks : TRUE
-                                                           IN targetDestination' = s
+                    /\  \/ track # "G" /\   \/  targetPlatform' = "P1"
+                                            \/  targetPlatform' = "P2"
+                                            \/  targetPlatform' = "P3"
+                                            \/  targetPlatform' = "P4"
+                        \/ track = "G" /\   \/  targetPlatform' = "P2"
+                                            \/  targetPlatform' = "P3"
+                                            \/  targetPlatform' = "P4"
+                    /\  \/ track \in EastOriginInTracks /\  \/ targetDestination' = "D"
+                                                        (*  \/ targetDestination' = "B" *)
+                        \/ track \in WestOriginInTracks /\ targetDestination' = "F"
                     /\ count' = count+1
 
 TrainLeaves ==  /\ targetDestination # "empty" /\ targetPlatform # "empty"

@@ -1,0 +1,24 @@
+TLC2 Version 2.12 of 29 January 2018
+Running breadth-first search Model-Checking with 1 worker on 8 cores with 3625MB heap and 64MB offheap memory (Windows 10 10.0 amd64, Oracle Corporation 1.8.0_162 x86_64).
+Parsing file D:\Documents\Universiteit\Bachelor3\FormeleSysteemmodelleringVoorSoftware\FS_Project\Station.tla
+Parsing file D:\Windows\Program Files\TLA 2.12\tla2sany\StandardModules\Naturals.tla
+Parsing file D:\Documents\Universiteit\Bachelor3\FormeleSysteemmodelleringVoorSoftware\FS_Project\Light.tla
+Parsing file D:\Documents\Universiteit\Bachelor3\FormeleSysteemmodelleringVoorSoftware\FS_Project\Switch.tla
+Parsing file D:\Documents\Universiteit\Bachelor3\FormeleSysteemmodelleringVoorSoftware\FS_Project\Track.tla
+Semantic processing of module Naturals
+Semantic processing of module Light
+Semantic processing of module Switch
+Semantic processing of module Track
+Semantic processing of module Station
+Starting... (2018-05-23 16:11:06)
+Computing initial states...
+Finished computing initial states: 1 distinct state generated.
+Model checking completed. No error has been found.
+  Estimates of the probability that TLC did not check all reachable states
+  because two distinct states had the same fingerprint:
+  calculated (optimistic):  val = 4.2E-15
+  based on the actual fingerprints:  val = 1.3E-15
+567 states generated, 232 distinct states found, 0 states left on queue.
+The depth of the complete state graph search is 18.
+The average outdegree of the complete state graph is 1 (minimum is 0, the maximum 3 and the 95th percentile is 2).
+Finished in 00s at (2018-05-23 16:11:07)

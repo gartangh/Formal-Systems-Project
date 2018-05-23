@@ -19,12 +19,6 @@ SetGreen == color' = "green"
 
 SetRed == color' = "red"
 
-IsGreen == /\ color = "green"
-           /\ UNCHANGED vars
-
-IsRed == /\ color = "red"
-         /\ UNCHANGED vars
-
 Next == \/ SetGreen
         \/ SetRed
 

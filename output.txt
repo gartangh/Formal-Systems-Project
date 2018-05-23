@@ -1,0 +1,284 @@
+TLC2 Version 2.12 of 29 January 2018
+Running breadth-first search Model-Checking with 1 worker on 8 cores with 3625MB heap and 64MB offheap memory (Windows 10 10.0 amd64, Oracle Corporation 1.8.0_162 x86_64).
+Parsing file D:\Documents\Universiteit\Bachelor3\FormeleSysteemmodelleringVoorSoftware\FS_Project\Station.tla
+Parsing file D:\Windows\Program Files\TLA 2.12\tla2sany\StandardModules\Naturals.tla
+Parsing file D:\Documents\Universiteit\Bachelor3\FormeleSysteemmodelleringVoorSoftware\FS_Project\Light.tla
+Parsing file D:\Documents\Universiteit\Bachelor3\FormeleSysteemmodelleringVoorSoftware\FS_Project\Switch.tla
+Parsing file D:\Documents\Universiteit\Bachelor3\FormeleSysteemmodelleringVoorSoftware\FS_Project\Track.tla
+Semantic processing of module Naturals
+Semantic processing of module Light
+Semantic processing of module Switch
+Semantic processing of module Track
+Semantic processing of module Station
+Starting... (2018-05-23 14:56:30)
+Computing initial states...
+Finished computing initial states: 1 distinct state generated.
+Warning: The variable busyA was changed while it is specified as UNCHANGED at
+line 95, col 33 to line 95, col 37 of module Station
+(Use the -nowarning option to disable this warning.)
+Error: Deadlock reached.
+Error: The behavior up to this point is:
+State 1: <Initial predicate>
+/\ colorL2W = "red"
+/\ stateSB1 = "first"
+/\ stateSB2 = "first"
+/\ colorL3E = "red"
+/\ colorL3W = "red"
+/\ stateSC1 = "first"
+/\ stateSC2 = "first"
+/\ stateSC3 = "first"
+/\ colorL4E = "red"
+/\ colorL4W = "red"
+/\ stateSD1 = "first"
+/\ stateSD2 = "first"
+/\ stateSF1 = "first"
+/\ stateSG1 = "first"
+/\ stateSH1 = "first"
+/\ busyA = 0
+/\ busyB = 0
+/\ busyC = 0
+/\ busyD = 0
+/\ busyF = 0
+/\ busyG = 0
+/\ busyH = 0
+/\ targetPlatformA = "empty"
+/\ targetPlatformB = "empty"
+/\ targetPlatformC = "empty"
+/\ targetPlatformD = "empty"
+/\ targetPlatformF = "empty"
+/\ targetPlatformG = "empty"
+/\ colorLAW = "red"
+/\ colorLBW = "red"
+/\ colorLCW = "red"
+/\ colorLDW = "red"
+/\ colorLFE = "red"
+/\ colorLGE = "red"
+/\ targetPlatformP1 = "empty"
+/\ targetPlatformP2 = "empty"
+/\ targetPlatformP3 = "empty"
+/\ targetPlatformP4 = "empty"
+/\ countP1 = 0
+/\ countP2 = 0
+/\ countP3 = 0
+/\ countP4 = 0
+/\ countA = 0
+/\ countB = 0
+/\ countC = 0
+/\ countD = 0
+/\ countF = 0
+/\ countG = 0
+/\ targetDestinationP1 = "empty"
+/\ targetDestinationP2 = "empty"
+/\ targetDestinationP3 = "empty"
+/\ targetDestinationP4 = "empty"
+/\ targetDestinationA = "empty"
+/\ targetDestinationB = "empty"
+/\ targetDestinationC = "empty"
+/\ targetDestinationD = "empty"
+/\ targetDestinationF = "empty"
+/\ targetDestinationG = "empty"
+/\ colorL1E = "red"
+/\ colorL1W = "red"
+/\ stateSA1 = "first"
+/\ stateSA2 = "first"
+/\ colorL2E = "red"
+
+State 2: <NewTrainC line 423, col 14 to line 428, col 129 of module Station>
+/\ colorL2W = "red"
+/\ stateSB1 = "first"
+/\ stateSB2 = "first"
+/\ colorL3E = "red"
+/\ colorL3W = "red"
+/\ stateSC1 = "first"
+/\ stateSC2 = "first"
+/\ stateSC3 = "first"
+/\ colorL4E = "red"
+/\ colorL4W = "red"
+/\ stateSD1 = "first"
+/\ stateSD2 = "first"
+/\ stateSF1 = "first"
+/\ stateSG1 = "first"
+/\ stateSH1 = "first"
+/\ busyA = 0
+/\ busyB = 0
+/\ busyC = 0
+/\ busyD = 0
+/\ busyF = 0
+/\ busyG = 0
+/\ busyH = 0
+/\ targetPlatformA = "empty"
+/\ targetPlatformB = "empty"
+/\ targetPlatformC = "P1"
+/\ targetPlatformD = "empty"
+/\ targetPlatformF = "empty"
+/\ targetPlatformG = "empty"
+/\ colorLAW = "red"
+/\ colorLBW = "red"
+/\ colorLCW = "red"
+/\ colorLDW = "red"
+/\ colorLFE = "red"
+/\ colorLGE = "red"
+/\ targetPlatformP1 = "empty"
+/\ targetPlatformP2 = "empty"
+/\ targetPlatformP3 = "empty"
+/\ targetPlatformP4 = "empty"
+/\ countP1 = 0
+/\ countP2 = 0
+/\ countP3 = 0
+/\ countP4 = 0
+/\ countA = 0
+/\ countB = 0
+/\ countC = 1
+/\ countD = 0
+/\ countF = 0
+/\ countG = 0
+/\ targetDestinationP1 = "empty"
+/\ targetDestinationP2 = "empty"
+/\ targetDestinationP3 = "empty"
+/\ targetDestinationP4 = "empty"
+/\ targetDestinationA = "empty"
+/\ targetDestinationB = "empty"
+/\ targetDestinationC = "F"
+/\ targetDestinationD = "empty"
+/\ targetDestinationF = "empty"
+/\ targetDestinationG = "empty"
+/\ colorL1E = "red"
+/\ colorL1W = "red"
+/\ stateSA1 = "first"
+/\ stateSA2 = "first"
+/\ colorL2E = "red"
+
+State 3: <NewTrainG line 430, col 14 to line 435, col 129 of module Station>
+/\ colorL2W = "red"
+/\ stateSB1 = "first"
+/\ stateSB2 = "first"
+/\ colorL3E = "red"
+/\ colorL3W = "red"
+/\ stateSC1 = "first"
+/\ stateSC2 = "first"
+/\ stateSC3 = "first"
+/\ colorL4E = "red"
+/\ colorL4W = "red"
+/\ stateSD1 = "first"
+/\ stateSD2 = "first"
+/\ stateSF1 = "first"
+/\ stateSG1 = "first"
+/\ stateSH1 = "first"
+/\ busyA = 0
+/\ busyB = 0
+/\ busyC = 0
+/\ busyD = 0
+/\ busyF = 0
+/\ busyG = 0
+/\ busyH = 0
+/\ targetPlatformA = "empty"
+/\ targetPlatformB = "empty"
+/\ targetPlatformC = "P1"
+/\ targetPlatformD = "empty"
+/\ targetPlatformF = "empty"
+/\ targetPlatformG = "P2"
+/\ colorLAW = "red"
+/\ colorLBW = "red"
+/\ colorLCW = "red"
+/\ colorLDW = "red"
+/\ colorLFE = "red"
+/\ colorLGE = "red"
+/\ targetPlatformP1 = "empty"
+/\ targetPlatformP2 = "empty"
+/\ targetPlatformP3 = "empty"
+/\ targetPlatformP4 = "empty"
+/\ countP1 = 0
+/\ countP2 = 0
+/\ countP3 = 0
+/\ countP4 = 0
+/\ countA = 0
+/\ countB = 0
+/\ countC = 1
+/\ countD = 0
+/\ countF = 0
+/\ countG = 1
+/\ targetDestinationP1 = "empty"
+/\ targetDestinationP2 = "empty"
+/\ targetDestinationP3 = "empty"
+/\ targetDestinationP4 = "empty"
+/\ targetDestinationA = "empty"
+/\ targetDestinationB = "empty"
+/\ targetDestinationC = "F"
+/\ targetDestinationD = "empty"
+/\ targetDestinationF = "empty"
+/\ targetDestinationG = "D"
+/\ colorL1E = "red"
+/\ colorL1W = "red"
+/\ stateSA1 = "first"
+/\ stateSA2 = "first"
+/\ colorL2E = "red"
+
+State 4: <SetPathG line 156, col 13 to line 160, col 74 of module Station>
+/\ colorL2W = "red"
+/\ stateSB1 = "first"
+/\ stateSB2 = "first"
+/\ colorL3E = "red"
+/\ colorL3W = "red"
+/\ stateSC1 = "first"
+/\ stateSC2 = "first"
+/\ stateSC3 = "first"
+/\ colorL4E = "red"
+/\ colorL4W = "red"
+/\ stateSD1 = "first"
+/\ stateSD2 = "first"
+/\ stateSF1 = "first"
+/\ stateSG1 = "first"
+/\ stateSH1 = "first"
+/\ busyA = 0
+/\ busyB = 0
+/\ busyC = 0
+/\ busyD = 0
+/\ busyF = 0
+/\ busyG = 1
+/\ busyH = 0
+/\ targetPlatformA = "empty"
+/\ targetPlatformB = "empty"
+/\ targetPlatformC = "P1"
+/\ targetPlatformD = "empty"
+/\ targetPlatformF = "empty"
+/\ targetPlatformG = "P2"
+/\ colorLAW = "red"
+/\ colorLBW = "red"
+/\ colorLCW = "red"
+/\ colorLDW = "red"
+/\ colorLFE = "red"
+/\ colorLGE = "green"
+/\ targetPlatformP1 = "empty"
+/\ targetPlatformP2 = "empty"
+/\ targetPlatformP3 = "empty"
+/\ targetPlatformP4 = "empty"
+/\ countP1 = 0
+/\ countP2 = 0
+/\ countP3 = 0
+/\ countP4 = 0
+/\ countA = 0
+/\ countB = 0
+/\ countC = 1
+/\ countD = 0
+/\ countF = 0
+/\ countG = 1
+/\ targetDestinationP1 = "empty"
+/\ targetDestinationP2 = "empty"
+/\ targetDestinationP3 = "empty"
+/\ targetDestinationP4 = "empty"
+/\ targetDestinationA = "empty"
+/\ targetDestinationB = "empty"
+/\ targetDestinationC = "F"
+/\ targetDestinationD = "empty"
+/\ targetDestinationF = "empty"
+/\ targetDestinationG = "D"
+/\ colorL1E = "red"
+/\ colorL1W = "red"
+/\ stateSA1 = "first"
+/\ stateSA2 = "first"
+/\ colorL2E = "red"
+
+8 states generated, 6 distinct states found, 0 states left on queue.
+The depth of the complete state graph search is 4.
+The average outdegree of the complete state graph is 1 (minimum is 0, the maximum 2 and the 95th percentile is 2).
+Finished in 00s at (2018-05-23 14:56:30)

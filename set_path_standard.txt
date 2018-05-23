@@ -1,0 +1,3 @@
+/\ UNCHANGED << busyA, busyB, busyC, busyD, busyF, busyG, busyH
+                stateSA1, stateSA2, stateSB1, stateSB2, stateSC1, stateSC2, stateSC3, stateSD1, stateSD2, stateSF1, stateSG1, stateSH1,
+                colorLAW, colorLBW, colorLCW, colorLDW ,colorLFE, colorLGE, colorL1E, colorL2E, colorL3E, colorL4E, colorL1W, colorL2W, colorL3W, colorL4W >>
