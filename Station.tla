@@ -3,12 +3,20 @@
 EXTENDS Naturals
 
 (* ---------------------------------------- VARIABLES ---------------------------------------- *)
-VARIABLES busyA, busyB, busyC, busyD, busyF, busyG, busyH, targetPlatformA, targetPlatformB,targetPlatformC, targetPlatformD, targetPlatformF, targetPlatformG, targetDestinationA, targetDestinationB,targetDestinationC, targetDestinationD, targetDestinationF, targetDestinationG, targetPlatformP1, targetPlatformP2, targetPlatformP3, targetPlatformP4, targetDestinationP1, targetDestinationP2, targetDestinationP3, targetDestinationP4,
-          (*colorLAW, colorLBW,*)colorLCW,(*colorLDW,colorLFE,*) colorLGE, colorL1E,colorL2E, colorL3E, colorL4E, colorL1W, colorL2W, colorL3W, colorL4W,
-          (*stateSA1,*)stateSA2, (*stateSB1,*)stateSB2, stateSC2, stateSC3,stateSD1,stateSD2, stateSF1, stateSG1, stateSH1,
+VARIABLES busyA, busyB, busyC, busyD, busyF, busyG, busyH,
+          targetPlatformA, targetPlatformB,targetPlatformC, targetPlatformD, targetPlatformF, targetPlatformG,
+          targetDestinationA, targetDestinationB,targetDestinationC, targetDestinationD, targetDestinationF, targetDestinationG,
+          targetPlatformP1, targetPlatformP2, targetPlatformP3, targetPlatformP4,
+          targetDestinationP1, targetDestinationP2, targetDestinationP3, targetDestinationP4,
+          colorLAW, colorLBW, colorLCW, colorLDW ,colorLFE, colorLGE, colorL1E,colorL2E, colorL3E, colorL4E, colorL1W, colorL2W, colorL3W, colorL4W,
+          stateSA1, stateSA2, stateSB1, stateSB2, stateSC2, stateSC3,stateSD1,stateSD2, stateSF1, stateSG1, stateSH1,
           countA, countB,countC, countD, countF, countG, countP1, countP2, countP3, countP4
 
+LAW == INSTANCE Light WITH color <- colorLAW
+LBW == INSTANCE Light WITH color <- colorLBW
 LCW == INSTANCE Light WITH color <- colorLCW
+LDW == INSTANCE Light WITH color <- colorLDW
+LFE == INSTANCE Light WITH color <- colorLFE
 LGE == INSTANCE Light WITH color <- colorLGE
 L1E == INSTANCE Light WITH color <- colorL1E
 L2E == INSTANCE Light WITH color <- colorL2E
@@ -19,7 +27,9 @@ L2W == INSTANCE Light WITH color <- colorL2W
 L3W == INSTANCE Light WITH color <- colorL3W
 L4W == INSTANCE Light WITH color <- colorL4W
 
+SA1 == INSTANCE Switch WITH state <- stateSA1
 SA2 == INSTANCE Switch WITH state <- stateSA2
+SB1 == INSTANCE Switch WITH state <- stateSB1
 SB2 == INSTANCE Switch WITH state <- stateSB2
 SC2 == INSTANCE Switch WITH state <- stateSC2
 SC3 == INSTANCE Switch WITH state <- stateSC3
@@ -41,49 +51,34 @@ P2 == INSTANCE Track WITH targetPlatform <- targetPlatformP2, targetDestination 
 P3 == INSTANCE Track WITH targetPlatform <- targetPlatformP3, targetDestination <- targetDestinationP3, count <- countP3
 P4 == INSTANCE Track WITH targetPlatform <- targetPlatformP4, targetDestination <- targetDestinationP4, count <- countP4
 
-(* Sequences of variables 
-lights == {LCW, LGE, L2E, L3E, L4E, L1W, L2W, L3W, L4W}
-switches == << SA2, SB2, SC2, SC3, SD1, SD2, SF1, SG1, SH1 >>
-intracks == << C, F >>
-outtracks == << D, G >>
-platforms == << P1, P2, P3, P4 >>*)
+(* Sequences of variables *)
+colors == <<(*colorLAW, colorLBW,*)colorLCW,(*colorLDW,colorLFE,*) colorLGE, colorL1E,colorL2E, colorL3E, colorL4E, colorL1W, colorL2W, colorL3W, colorL4W,>>
+
+targetPlatformsOfPlatforms == << targetPlatformP1, targetPlatformP2, targetPlatformP3, targetPlatformP4 >>
+targetPlatformsOfTracks == << targetPlatformA, targetPlatformB,targetPlatformC, targetPlatformD, targetPlatformF, targetPlatformG >>
+targetPlatforms == << targetPlatformA, targetPlatformB,targetPlatformC, targetPlatformD, targetPlatformF, targetPlatformG, targetPlatformP1, targetPlatformP2, targetPlatformP3, targetPlatformP4 >>
+
+targetDestinationsOfPlatforms == << targetDestinationP1, targetDestinationP2, targetDestinationP3, targetDestinationP4 >>
+targetDestinationsOfTracks == << targetDestinationA, targetDestinationB,targetDestinationC, targetDestinationD, targetDestinationF, targetDestinationG >>
+targetDestinations == << targetDestinationA, targetDestinationB,targetDestinationC, targetDestinationD, targetDestinationF, targetDestinationG, targetDestinationP1, targetDestinationP2, targetDestinationP3, targetDestinationP4 >>
+
 busys == << busyA, busyB, busyC, busyD, busyF, busyG, busyH >>
-vars ==	<< busys,targetPlatformA, targetPlatformB,targetPlatformC, targetPlatformD, targetPlatformF, targetPlatformG, targetDestinationA, targetDestinationB,targetDestinationC, targetDestinationD, targetDestinationF, targetDestinationG, targetPlatformP1, targetPlatformP2, targetPlatformP3, targetPlatformP4, targetDestinationP1, targetDestinationP2, targetDestinationP3, targetDestinationP4,
-          (*colorLAW, colorLBW,*)colorLCW,(*colorLDW,colorLFE,*) colorLGE, colorL1E,colorL2E, colorL3E, colorL4E, colorL1W, colorL2W, colorL3W, colorL4W,
-          (*stateSA1,*)stateSA2, (*stateSB1,*)stateSB2, stateSC2, stateSC3,stateSD1,stateSD2, stateSF1, stateSG1, stateSH1,
+
+vars ==	<<busyA, busyB, busyC, busyD, busyF, busyG, busyH,
+          targetPlatformA, targetPlatformB,targetPlatformC, targetPlatformD, targetPlatformF, targetPlatformG,
+          targetDestinationA, targetDestinationB,targetDestinationC, targetDestinationD, targetDestinationF, targetDestinationG,
+          targetPlatformP1, targetPlatformP2, targetPlatformP3, targetPlatformP4,
+          targetDestinationP1, targetDestinationP2, targetDestinationP3, targetDestinationP4,
+          colorLAW, colorLBW, colorLCW, colorLDW ,colorLFE, colorLGE, colorL1E,colorL2E, colorL3E, colorL4E, colorL1W, colorL2W, colorL3W, colorL4W,
+          stateSA1, stateSA2, stateSB1, stateSB2, stateSC2, stateSC3,stateSD1,stateSD2, stateSF1, stateSG1, stateSH1,
           countA, countB,countC, countD, countF, countG, countP1, countP2, countP3, countP4 >>
 
 (* ---------------------------------------- INITIALISATION ---------------------------------------- *)
 
-Init == /\ LCW!Init
-        /\ LGE!Init
-        /\ L1E!Init
-        /\ L2E!Init
-        /\ L3E!Init
-        /\ L4E!Init
-        /\ L1W!Init
-        /\ L2W!Init
-        /\ L3W!Init
-        /\ L4W!Init
-        /\ SA2!Init
-        /\ SB2!Init
-        /\ SC2!Init
-        /\ SC3!Init
-        /\ SD1!Init
-        /\ SD2!Init
-        /\ SF1!Init
-        /\ SG1!Init
-        /\ SH1!Init
-        /\ A!Init
-        /\ B!Init
-        /\ C!Init
-        /\ D!Init
-        /\ F!Init
-        /\ G!Init
-        /\ P1!Init
-        /\ P2!Init
-        /\ P3!Init
-        /\ P4!Init
+Init == /\ LAW!Init /\ LBW!Init /\ LCW!Init /\ LDW!Init /\ LFW!Init /\ LGE!Init /\ L1E!Init /\ L2E!Init /\ L3E!Init /\ L4E!Init /\ L1W!Init /\ L2W!Init /\ L3W!Init /\ L4W!Init
+        /\ SA1!Init /\ SA2!Init /\ SB1!Init /\ SB2!Init /\ SC2!Init /\ SC3!Init /\ SD1!Init /\ SD2!Init /\ SF1!Init /\ SG1!Init /\ SH1!Init
+        /\ A!Init /\ B!Init /\ C!Init /\ D!Init /\ F!Init /\ G!Init
+        /\ P1!Init /\ P2!Init /\ P3!Init /\ P4!Init
         /\ busyA = 0 /\ busyB = 0 /\ busyC = 0 /\ busyD = 0 /\ busyF = 0 /\ busyG = 0 /\ busyH = 0
 
 (* ---------------------------------------- ACTIONS ---------------------------------------- *)
@@ -266,9 +261,11 @@ TrainLeavesG == /\ LGE!IsGreen
 
 (* NewtrainA == A!NewTrain("A") *)
 
-NewTrainC == C!NewTrain("C")
+NewTrainC == /\ C!NewTrain("C")
+             /\ UNCHANGED <<
 
-NewTrainG == G!NewTrain("G")
+NewTrainG == /\ G!NewTrain("G")
+             /\ UNCHANGED << 
 
 (* ---------------------------------------- NEXT STATE ---------------------------------------- *)
 
