@@ -90,6 +90,14 @@ Init == /\ LAW!Init /\ LBW!Init /\ LCW!Init /\ LDW!Init /\ LFE!Init /\ LGE!Init 
 
 (* ---------------------------------------- ACTIONS ---------------------------------------- *)
 
+ResetSwitches(layer) == \/ /\ layer = "A" /\ SA1!SwitchFirst /\ SA2!SwitchFirst
+                        \/ /\ layer = "B" /\ SB1!SwitchFirst /\ SB2!SwitchFirst
+                        \/ /\ layer = "C" /\ SC1!SwitchFirst /\ SC2!SwitchFirst /\ SC3!SwitchFirst
+                        \/ /\ layer = "D" /\ SD1!SwitchFirst /\ SD2!SwitchFirst
+                        \/ /\ layer = "F" /\ SF1!SwitchFirst
+                        \/ /\ layer = "G" /\ SG1!SwitchFirst
+                        \/ /\ layer = "H" /\ SH1!SwitchFirst
+
 (* ---------------------------------------- SET PATH FROM A ---------------------------------------- *)
 
 SetPathAtoP1 == /\ busyA = 0 /\ reservedP1 = 0
@@ -348,8 +356,9 @@ TrainLeavesP1W ==   /\ colorL1W = "green"
                     /\ P1!TrainLeaves
                     /\ L1W!SetRed
                     /\ busyF' = busyF - 1
-                    /\ UNCHANGED << busyA, busyB, busyC, busyD, busyG, busyH,
-                                    statesSwitches, reserveds,
+                    /\ ResetSwitches("F") 
+                    /\ UNCHANGED << busyA, busyB, busyC, busyD, busyG, busyH, reserveds,
+                                    stateSA1, stateSA2, stateSB1, stateSB2, stateSC1, stateSC2, stateSC3, stateSD1, stateSD2, stateSG1, stateSH1,
                                     targetPlatformA, targetPlatformB, targetPlatformC, targetPlatformD, targetPlatformG,
                                     targetDestinationA, targetDestinationB, targetDestinationC, targetDestinationD, targetDestinationG,
                                     targetPlatformP2, targetPlatformP3, targetPlatformP4,
@@ -363,8 +372,9 @@ TrainLeavesP2W ==   /\ colorL2W = "green"
                     /\ P2!TrainLeaves
                     /\ L2W!SetRed
                     /\ busyF' = busyF -1 /\ busyG' = busyG -1
-                    /\ UNCHANGED << busyA, busyB, busyC, busyD, busyH,
-                                    statesSwitches, reserveds,
+                    /\ ResetSwitches("F") /\ ResetSwitches("G") 
+                    /\ UNCHANGED << busyA, busyB, busyC, busyD, busyH, reserveds,
+                                    stateSA1, stateSA2, stateSB1, stateSB2, stateSC1, stateSC2, stateSC3, stateSD1, stateSD2, stateSH1,
                                     targetPlatformA, targetPlatformB, targetPlatformC, targetPlatformD, targetPlatformG,
                                     targetDestinationA, targetDestinationB, targetDestinationC, targetDestinationD, targetDestinationG,
                                     targetPlatformP1, targetPlatformP3, targetPlatformP4,
@@ -378,8 +388,9 @@ TrainLeavesP3W ==   /\ colorL3W= "green"
                     /\ P3!TrainLeaves
                     /\ L3W!SetRed
                     /\ busyF' = busyF - 1 /\ busyG' = busyG - 1 /\ busyH' = busyH - 1
-                    /\ UNCHANGED << busyA, busyB, busyC, busyD,
-                                    statesSwitches, reserveds,
+                    /\ ResetSwitches("F") /\ ResetSwitches("G") /\ ResetSwitches("H")
+                    /\ UNCHANGED << busyA, busyB, busyC, busyD, reserveds,
+                                    stateSA1, stateSA2, stateSB1, stateSB2, stateSC1, stateSC2, stateSC3, stateSD1, stateSD2,
                                     targetPlatformA, targetPlatformB, targetPlatformC, targetPlatformD, targetPlatformG,
                                     targetDestinationA, targetDestinationB, targetDestinationC, targetDestinationD, targetDestinationG,
                                     targetPlatformP1, targetPlatformP2, targetPlatformP4,
@@ -393,8 +404,9 @@ TrainLeavesP4W ==   /\ colorL4W = "green"
                     /\ P4!TrainLeaves
                     /\ L4W!SetRed
                     /\ busyF' = busyF -1 /\ busyG' = busyG - 1 /\ busyH' = busyH - 1
-                    /\ UNCHANGED << busyA, busyB, busyC, busyD,
-                                    statesSwitches, reserveds,
+                    /\ ResetSwitches("F") /\ ResetSwitches("G") /\ ResetSwitches("H")
+                    /\ UNCHANGED << busyA, busyB, busyC, busyD, reserveds,
+                                    stateSA1, stateSA2, stateSB1, stateSB2, stateSC1, stateSC2, stateSC3, stateSD1, stateSD2,
                                     targetPlatformA, targetPlatformB, targetPlatformC, targetPlatformD, targetPlatformG,
                                     targetDestinationA, targetDestinationB, targetDestinationC, targetDestinationD, targetDestinationG,
                                     targetPlatformP1, targetPlatformP2, targetPlatformP3,
@@ -407,20 +419,24 @@ TrainLeavesP2E ==   /\ colorL2E = "green"
                     /\  \/  /\ targetDestinationP2 = "D"
                             /\ D!TrainEnters(targetPlatformP2, targetDestinationP2)
                             /\ busyB' = busyB - 1 /\ busyC' = busyC - 1 /\ busyD' = busyD - 1
+                            /\ ResetSwitches("B") /\ ResetSwitches("C") /\ ResetSwitches("D") 
                             /\ UNCHANGED << busyA, busyF, busyG, busyH,
                                             countA, countB, countC, countF, countG,
+                                            stateSA1, stateSA2, stateSF1, stateSG1, stateSH1,
                                             targetPlatformA, targetPlatformB, targetPlatformC, targetPlatformF, targetPlatformG,
                                             targetDestinationA, targetDestinationB, targetDestinationC, targetDestinationF, targetDestinationG  >>
                         \/  /\ targetDestinationP2 = "B"
                             /\ B!TrainEnters(targetPlatformP2, targetDestinationP2)
                             /\ busyB' = busyB - 1 
+                            /\ ResetSwitches("B")
                             /\ UNCHANGED << busyA, busyC, busyD, busyF, busyG, busyH,
                                             countA, countC, countD, countF, countG,
+                                            stateSA1, stateSA2, stateSC1, stateSC2, stateSC3, stateSD1, stateSD2, stateSF1, stateSG1, stateSH1,
                                             targetPlatformA, targetPlatformC, targetPlatformD, targetPlatformF, targetPlatformG,
                                             targetDestinationA, targetDestinationC, targetDestinationD, targetDestinationF, targetDestinationG  >>
                     /\ P2!TrainLeaves
                     /\ L2E!SetRed
-                    /\ UNCHANGED << statesSwitches, reserveds,
+                    /\ UNCHANGED << reserveds,
                                     targetPlatformP1, targetPlatformP3, targetPlatformP4,
                                     targetDestinationP1, targetDestinationP3, targetDestinationP4,
                                     colorLAW, colorLBW, colorLCW, colorLDW,colorLFE, colorLGE, colorL1E, colorL3E, colorL4E, colorL1W, colorL2W, colorL3W, colorL4W,
@@ -431,20 +447,24 @@ TrainLeavesP3E ==   /\ colorL3E = "green"
                     /\  \/  /\ targetDestinationP3 = "D" 
                             /\ D!TrainEnters(targetPlatformP3, targetDestinationP3) 
                             /\ busyC' = busyC - 1 /\ busyD' = busyD - 1
+                            /\ ResetSwitches("C") /\ ResetSwitches("D")
                             /\ UNCHANGED << busyA, busyB, busyF, busyG, busyH,
                                             countA, countB, countC, countF, countG,
+                                            stateSA1, stateSA2, stateSB1, stateSB2, stateSF1, stateSG1, stateSH1,
                                             targetPlatformA, targetPlatformB, targetPlatformC, targetPlatformF, targetPlatformG,
                                             targetDestinationA, targetDestinationB, targetDestinationC, targetDestinationF, targetDestinationG  >>
                         \/  /\ targetDestinationP3 = "B" 
                             /\ B!TrainEnters(targetPlatformP3, targetDestinationP3) 
                             /\ busyB'= busyB - 1 /\ busyC'= busyC - 1
+                            /\ ResetSwitches("B") /\ ResetSwitches("C")
                             /\ UNCHANGED << busyA, busyD, busyF, busyG, busyH,
                                             countA, countC, countD, countF, countG,
+                                            stateSA1, stateSA2, stateSD1, stateSD2, stateSF1, stateSG1, stateSH1,
                                             targetPlatformA, targetPlatformC, targetPlatformD, targetPlatformF, targetPlatformG,
                                             targetDestinationA, targetDestinationC, targetDestinationD, targetDestinationF, targetDestinationG >>
                     /\ P3!TrainLeaves
                     /\ L3E!SetRed
-                    /\ UNCHANGED << statesSwitches, reserveds,
+                    /\ UNCHANGED << reserveds,
                                     targetPlatformP1, targetPlatformP2, targetPlatformP4,
                                     targetDestinationP1, targetDestinationP2, targetDestinationP4,
                                     colorLAW, colorLBW, colorLCW, colorLDW,colorLFE, colorLGE, colorL1E, colorL2E, colorL4E, colorL1W, colorL2W, colorL3W, colorL4W,
@@ -455,20 +475,24 @@ TrainLeavesP4E ==   /\ colorL4E = "green"
                     /\  \/  /\ targetDestinationP4 = "D" 
                             /\ D!TrainEnters(targetPlatformP4, targetDestinationP4) 
                             /\ busyD' = busyD -1 
+                            /\ ResetSwitches("D")
                             /\ UNCHANGED << busyA, busyB, busyC, busyF, busyG, busyH,
                                             countA, countB, countC, countF, countG,
+                                            stateSA1, stateSA2, stateSB1, stateSB2, stateSC1, stateSC2, stateSC3, stateSF1, stateSG1, stateSH1,
                                             targetPlatformA, targetPlatformB, targetPlatformC, targetPlatformF, targetPlatformG,
                                             targetDestinationA, targetDestinationB, targetDestinationC, targetDestinationF, targetDestinationG >>
                         \/  /\ targetDestinationP4 = "B"
                             /\ B!TrainEnters(targetPlatformP4, targetDestinationP4) 
                             /\ busyD' = busyD -1 /\ busyC' = busyC -1 /\ busyB' = busyB -1 
+                            /\ ResetSwitches("D") /\ ResetSwitches("C") /\ ResetSwitches("B")
                             /\ UNCHANGED << busyA, busyF, busyG, busyH,
                                             countA, countC, countD, countF, countG,
+                                            stateSA1, stateSA2, stateSF1, stateSG1, stateSH1,
                                             targetPlatformA, targetPlatformC, targetPlatformD, targetPlatformF, targetPlatformG,
                                             targetDestinationA, targetDestinationC, targetDestinationD, targetDestinationF, targetDestinationG  >>
                     /\ P4!TrainLeaves
                     /\ L4E!SetRed
-                    /\ UNCHANGED << statesSwitches, reserveds,
+                    /\ UNCHANGED << reserveds,
                                     targetPlatformP1, targetPlatformP2, targetPlatformP3,
                                     targetDestinationP1, targetDestinationP2, targetDestinationP3,
                                     colorLAW, colorLBW, colorLCW, colorLDW,colorLFE, colorLGE, colorL1E, colorL2E, colorL3E, colorL1W, colorL2W, colorL3W, colorL4W,
@@ -480,8 +504,10 @@ TrainLeavesA == /\ colorLAW = "green"
                         /\ P1!TrainEnters(targetPlatformA, targetDestinationA)
                         /\ busyA' = busyA - 1
                         /\ reservedP1' = reservedP1 - 1
+                        /\ ResetSwitches("A")
                         /\ UNCHANGED << busyB, busyC, busyD, busyF, busyG, busyH, 
                                         countP2, countP3, countP4,
+                                        stateSB1, stateSB2, stateSC1, stateSC2, stateSC3, stateSD1, stateSD2, stateSF1, stateSG1, stateSH1,
                                         targetDestinationP2, targetDestinationP3,targetDestinationP4,
                                         targetPlatformP2, targetPlatformP3, targetPlatformP4,
                                         reservedP2, reservedP3, reservedP4 >>
@@ -489,8 +515,10 @@ TrainLeavesA == /\ colorLAW = "green"
                         /\ P2!TrainEnters(targetPlatformA, targetDestinationA)
                         /\ busyA' = busyA - 1 /\ busyB' = busyB - 1
                         /\ reservedP2' = reservedP2 - 1
+                        /\ ResetSwitches("A") /\ ResetSwitches("B")
                         /\ UNCHANGED << busyC, busyD, busyF, busyG, busyH, 
                                         countP1, countP3, countP4,
+                                        stateSC1, stateSC2, stateSC3, stateSD1, stateSD2, stateSF1, stateSG1, stateSH1,
                                         targetDestinationP1, targetDestinationP3,targetDestinationP4,
                                         targetPlatformP1, targetPlatformP3, targetPlatformP4,
                                         reservedP1, reservedP3, reservedP4 >>
@@ -498,8 +526,10 @@ TrainLeavesA == /\ colorLAW = "green"
                         /\ P3!TrainEnters(targetPlatformA, targetDestinationA)
                         /\ busyA' = busyA - 1 /\ busyB' = busyB - 1 /\ busyC' = busyC - 1
                         /\ reservedP3' = reservedP3 - 1
+                        /\ ResetSwitches("A") /\ ResetSwitches("B") /\ ResetSwitches("C")
                         /\ UNCHANGED << busyD, busyF, busyG, busyH,
                                         countP1, countP2, countP4,
+                                        stateSD1, stateSD2, stateSF1, stateSG1, stateSH1,
                                         targetDestinationP1, targetDestinationP2, targetDestinationP4,
                                         targetPlatformP1, targetPlatformP2, targetPlatformP4,
                                         reservedP1, reservedP2, reservedP4 >>
@@ -507,15 +537,16 @@ TrainLeavesA == /\ colorLAW = "green"
                         /\ P4!TrainEnters(targetPlatformA, targetDestinationA)
                         /\ busyA' = busyA - 1 /\ busyB' = busyB - 1 /\ busyC' = busyC - 1 /\ busyD' = busyD - 1
                         /\ reservedP4' = reservedP4 - 1
+                        /\ ResetSwitches("A") /\ ResetSwitches("B") /\ ResetSwitches("C") /\ ResetSwitches("D")
                         /\ UNCHANGED << busyF, busyG, busyH,
                                         countP1, countP2, countP3,
+                                        stateSF1, stateSG1, stateSH1,
                                         targetDestinationP1, targetDestinationP2, targetDestinationP3,
                                         targetPlatformP1, targetPlatformP2, targetPlatformP3,
                                         reservedP1, reservedP2, reservedP3 >>
                 /\ A!TrainLeaves
                 /\ LAW!SetRed
-                /\ UNCHANGED << statesSwitches,
-                                colorLBW, colorLCW, colorLDW, colorLFE, colorLGE, colorL1E, colorL2E, colorL3E, colorL4E, colorL1W, colorL2W, colorL3W, colorL4W,
+                /\ UNCHANGED << colorLBW, colorLCW, colorLDW, colorLFE, colorLGE, colorL1E, colorL2E, colorL3E, colorL4E, colorL1W, colorL2W, colorL3W, colorL4W,
                                 targetPlatformB, targetPlatformC, targetPlatformD, targetPlatformF, targetPlatformG,
                                 targetDestinationB, targetDestinationC, targetDestinationD, targetDestinationF, targetDestinationG,
                                 countB, countC, countD, countF, countG
@@ -526,8 +557,10 @@ TrainLeavesC == /\ colorLCW = "green"
                         /\ P1!TrainEnters(targetPlatformC, targetDestinationC)
                         /\ busyA' = busyA - 1 /\ busyB' = busyB - 1 /\ busyC' = busyC - 1
                         /\ reservedP1' = reservedP1 - 1
+                        /\ ResetSwitches("A") /\ ResetSwitches("B") /\ ResetSwitches("C")
                         /\ UNCHANGED << busyD, busyF, busyG, busyH,
                                         countP2, countP3, countP4,
+                                        stateSD1, stateSD2, stateSF1, stateSH1, stateSG1,
                                         targetDestinationP2, targetDestinationP3,targetDestinationP4,
                                         targetPlatformP2, targetPlatformP3, targetPlatformP4,
                                         reservedP2, reservedP3, reservedP4
@@ -536,8 +569,10 @@ TrainLeavesC == /\ colorLCW = "green"
                         /\ P2!TrainEnters(targetPlatformC, targetDestinationC)
                         /\ busyB' = busyB - 1 /\ busyC' = busyC - 1
                         /\ reservedP2' = reservedP2 - 1
+                        /\ ResetSwitches("B") /\ ResetSwitches("C")
                         /\ UNCHANGED << busyA, busyD, busyF, busyG, busyH,
                                         countP1, countP3, countP4,
+                                        stateSA1, stateSA2, stateSD1, stateSD2, stateSF1, stateSH1, stateSG1,
                                         targetDestinationP1, targetDestinationP3,targetDestinationP4,
                                         targetPlatformP1, targetPlatformP3, targetPlatformP4,
                                         reservedP1, reservedP3, reservedP4 
@@ -546,8 +581,10 @@ TrainLeavesC == /\ colorLCW = "green"
                         /\ P3!TrainEnters(targetPlatformC, targetDestinationC)
                         /\ busyC' = busyC - 1
                         /\ reservedP3' = reservedP3 - 1
+                        /\ ResetSwitches("C")
                         /\ UNCHANGED << busyA, busyB, busyD, busyF, busyG, busyH,
                                         countP1, countP2, countP4,
+                                        stateSA1, stateSA2, stateSB1, stateSB2, stateSD1, stateSD2, stateSF1, stateSH1, stateSG1,
                                         targetDestinationP1, targetDestinationP2,targetDestinationP4,
                                         targetPlatformP1, targetPlatformP2, targetPlatformP4,
                                         reservedP1, reservedP2, reservedP4
@@ -556,16 +593,17 @@ TrainLeavesC == /\ colorLCW = "green"
                         /\ P4!TrainEnters(targetPlatformC, targetDestinationC)
                         /\ busyC' = busyC - 1  /\ busyD' = busyC -1
                         /\ reservedP4' = reservedP4 - 1
+                        /\ ResetSwitches("C") /\ ResetSwitches("D")
                         /\ UNCHANGED << busyA, busyB, busyF, busyG, busyH,
                                         countP1, countP2, countP3,
+                                        stateSA1, stateSA2, stateSB1, stateSB2, stateSF1, stateSG1, stateSH1,
                                         targetDestinationP1, targetDestinationP2,targetDestinationP3,
                                         targetPlatformP1, targetPlatformP2, targetPlatformP3,
                                         reservedP1, reservedP2, reservedP3
                                         >>
                 /\ C!TrainLeaves
                 /\ LCW!SetRed
-                /\ UNCHANGED << statesSwitches, 
-                                colorLAW, colorLBW, colorLDW,colorLFE, colorLGE, colorL1E,colorL2E, colorL3E, colorL4E, colorL1W, colorL2W, colorL3W, colorL4W,
+                /\ UNCHANGED << colorLAW, colorLBW, colorLDW,colorLFE, colorLGE, colorL1E,colorL2E, colorL3E, colorL4E, colorL1W, colorL2W, colorL3W, colorL4W,
                                 targetPlatformA, targetPlatformB, targetPlatformD, targetPlatformF, targetPlatformG,
                                 targetDestinationA, targetDestinationB, targetDestinationD, targetDestinationF, targetDestinationG,
                                 countA, countB, countD, countF, countG
@@ -576,33 +614,38 @@ TrainLeavesG == /\ colorLGE = "green"
                         /\ P2!TrainEnters(targetPlatformG, targetDestinationG)
                         /\ busyG' = busyG - 1
                         /\ reservedP2' = reservedP2 - 1
+                        /\ ResetSwitches("G")
                         /\ UNCHANGED << busyA, busyB, busyC, busyD, busyF, busyH, 
                                         countP1, countP3, countP4,
+                                        stateSA1, stateSA2, stateSB1, stateSB2, stateSC1, stateSC2, stateSC3, stateSD1, stateSD2, stateSF1, stateSH1,
                                         targetDestinationP1, targetDestinationP3,targetDestinationP4,
                                         targetPlatformP1, targetPlatformP3, targetPlatformP4,
                                         reservedP1, reservedP3, reservedP4 >>
                     \/  /\ targetPlatformG = "P3"
                         /\ P3!TrainEnters(targetPlatformG, targetDestinationG)
                         /\ busyG' = busyG - 1 /\ busyH' = busyH -1
+                        /\ ResetSwitches("G") /\ ResetSwitches ("H")
                         /\ reservedP3' = reservedP3 - 1
                         /\ UNCHANGED << busyA, busyB, busyC, busyD, busyF, 
-                                        countP1, countP2, countP4,targetDestinationP4,
+                                        countP1, countP2, countP4,
+                                        stateSA1, stateSA2, stateSB1, stateSB2, stateSC1, stateSC2, stateSC3, stateSD1, stateSD2, stateSF1, 
                                         targetDestinationP1, targetDestinationP2,targetDestinationP4,
                                         targetPlatformP1, targetPlatformP2, targetPlatformP4,
                                         reservedP1, reservedP2, reservedP4 >>
                     \/  /\ targetPlatformG = "P4"
                         /\ P4!TrainEnters(targetPlatformG, targetDestinationG)
                         /\ busyG' = busyG - 1 /\ busyH' = busyH - 1
+                        /\ ResetSwitches("G") /\ ResetSwitches ("H")
                         /\ reservedP4' = reservedP4 - 1
                         /\ UNCHANGED << busyA, busyB, busyC, busyD, busyF, 
                                         countP1, countP2, countP3,
+                                        stateSA1, stateSA2, stateSB1, stateSB2, stateSC1, stateSC2, stateSC3, stateSD1, stateSD2, stateSF1,
                                         targetDestinationP1, targetDestinationP2,targetDestinationP3,
                                         targetPlatformP1, targetPlatformP2, targetPlatformP3,
                                         reservedP1, reservedP2, reservedP3 >>
                 /\ G!TrainLeaves
                 /\ LGE!SetRed
-                /\ UNCHANGED << statesSwitches,
-                                colorLAW, colorLBW, colorLCW, colorLDW, colorLFE, colorL1E,colorL2E, colorL3E, colorL4E, colorL1W, colorL2W, colorL3W, colorL4W,
+                /\ UNCHANGED << colorLAW, colorLBW, colorLCW, colorLDW, colorLFE, colorL1E,colorL2E, colorL3E, colorL4E, colorL1W, colorL2W, colorL3W, colorL4W,
                                 targetPlatformA, targetPlatformB, targetPlatformC, targetPlatformD, targetPlatformF,
                                 targetDestinationA, targetDestinationB, targetDestinationC, targetDestinationD, targetDestinationF,
                                 countA, countB, countC, countD, countF
