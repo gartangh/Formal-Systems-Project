@@ -415,6 +415,32 @@ TrainLeavesP4W ==   /\ colorL4W = "green"
                                     countA, countB, countC, countD, countG, countP1, countP2, countP3
                                     >>
 
+TrainLeavesP1E ==   /\ colorL1E = "green"
+                    /\  \/  /\ targetDestinationP1 = "D"
+                            /\ D!TrainEnters(targetPlatformP1, targetDestinationP1)
+                            /\ busyA' = busyA - 1 /\ busyB' = busyB - 1 /\ busyC' = busyC - 1 /\ busyD' = busyD - 1
+                            /\ ResetSwitches("A") /\ ResetSwitches("B") /\ ResetSwitches("C") /\ ResetSwitches("D")
+                            /\ UNCHANGED << busyF, busyG, busyH,
+                                            countA, countB, countC, countF, countG,
+                                            stateSF1, stateSG1, stateSH1, targetPlatformA, targetPlatformB, targetPlatformC, targetPlatformF, targetPlatformG, targetDestinationA, targetDestinationB, targetDestinationC, targetDestinationF, targetDestinationG >>
+                        \/  /\ targetDestinationP1 = "B"
+                            /\ B!TrainEnters(targetPlatformP1, targetDestinationP1)
+                            /\ busyA' = busyA - 1 /\ busyB' = busyB - 1
+                            /\ ResetSwitches("A") /\ ResetSwitches("B")
+                            /\ UNCHANGED << busyC, busyD, busyF, busyG, busyH,
+                                            countA, countC, countD, countF, countG,
+                                            stateSC1, stateSC2, stateSC3, stateSD1, stateSD2, stateSF1, stateSG1, stateSH1,
+                                            targetPlatformA, targetPlatformC, targetPlatformD, targetPlatformF, targetPlatformG,
+                                            targetDestinationA, targetDestinationC, targetDestinationD, targetDestinationF, targetDestinationG >>
+                    /\ P1!TrainLeaves
+                    /\ L1E!SetRed
+                    /\ UNCHANGED << reserveds,
+                                    targetPlatformP2, targetPlatformP3, targetPlatformP4,
+                                    targetDestinationP2, targetDestinationP3, targetDestinationP4,
+                                    colorLAW, colorLBW, colorLCW, colorLDW, colorLFE, colorLGE, colorL2E, colorL3E, colorL4E, colorL1W, colorL2W, colorL3W, colorL4W,
+                                    countP2, countP3, countP4
+                                    >>
+
 TrainLeavesP2E ==   /\ colorL2E = "green"
                     /\  \/  /\ targetDestinationP2 = "D"
                             /\ D!TrainEnters(targetPlatformP2, targetDestinationP2)
@@ -424,7 +450,7 @@ TrainLeavesP2E ==   /\ colorL2E = "green"
                                             countA, countB, countC, countF, countG,
                                             stateSA1, stateSA2, stateSF1, stateSG1, stateSH1,
                                             targetPlatformA, targetPlatformB, targetPlatformC, targetPlatformF, targetPlatformG,
-                                            targetDestinationA, targetDestinationB, targetDestinationC, targetDestinationF, targetDestinationG  >>
+                                            targetDestinationA, targetDestinationB, targetDestinationC, targetDestinationF, targetDestinationG >>
                         \/  /\ targetDestinationP2 = "B"
                             /\ B!TrainEnters(targetPlatformP2, targetDestinationP2)
                             /\ busyB' = busyB - 1 
@@ -433,7 +459,7 @@ TrainLeavesP2E ==   /\ colorL2E = "green"
                                             countA, countC, countD, countF, countG,
                                             stateSA1, stateSA2, stateSC1, stateSC2, stateSC3, stateSD1, stateSD2, stateSF1, stateSG1, stateSH1,
                                             targetPlatformA, targetPlatformC, targetPlatformD, targetPlatformF, targetPlatformG,
-                                            targetDestinationA, targetDestinationC, targetDestinationD, targetDestinationF, targetDestinationG  >>
+                                            targetDestinationA, targetDestinationC, targetDestinationD, targetDestinationF, targetDestinationG >>
                     /\ P2!TrainLeaves
                     /\ L2E!SetRed
                     /\ UNCHANGED << reserveds,
@@ -452,7 +478,7 @@ TrainLeavesP3E ==   /\ colorL3E = "green"
                                             countA, countB, countC, countF, countG,
                                             stateSA1, stateSA2, stateSB1, stateSB2, stateSF1, stateSG1, stateSH1,
                                             targetPlatformA, targetPlatformB, targetPlatformC, targetPlatformF, targetPlatformG,
-                                            targetDestinationA, targetDestinationB, targetDestinationC, targetDestinationF, targetDestinationG  >>
+                                            targetDestinationA, targetDestinationB, targetDestinationC, targetDestinationF, targetDestinationG >>
                         \/  /\ targetDestinationP3 = "B" 
                             /\ B!TrainEnters(targetPlatformP3, targetDestinationP3) 
                             /\ busyB'= busyB - 1 /\ busyC'= busyC - 1
@@ -489,7 +515,7 @@ TrainLeavesP4E ==   /\ colorL4E = "green"
                                             countA, countC, countD, countF, countG,
                                             stateSA1, stateSA2, stateSF1, stateSG1, stateSH1,
                                             targetPlatformA, targetPlatformC, targetPlatformD, targetPlatformF, targetPlatformG,
-                                            targetDestinationA, targetDestinationC, targetDestinationD, targetDestinationF, targetDestinationG  >>
+                                            targetDestinationA, targetDestinationC, targetDestinationD, targetDestinationF, targetDestinationG >>
                     /\ P4!TrainLeaves
                     /\ L4E!SetRed
                     /\ UNCHANGED << reserveds,
@@ -700,9 +726,6 @@ TrainLeavesF == /\ F!TrainLeaves
 Next == \/ NewTrainA
         \/ NewTrainC
         \/ NewTrainG
-        \/ TrainLeavesB
-        \/ TrainLeavesD
-        \/ TrainLeavesF
         \/ SetPathA
         \/ SetPathC
         \/ SetPathG
@@ -717,6 +740,7 @@ Next == \/ NewTrainA
         \/ SetPathP2W
         \/ SetPathP3W
         \/ SetPathP4W
+        \/ TrainLeavesP1E
         \/ TrainLeavesP2E
         \/ TrainLeavesP3E
         \/ TrainLeavesP4E
@@ -724,10 +748,19 @@ Next == \/ NewTrainA
         \/ TrainLeavesP2W
         \/ TrainLeavesP3W
         \/ TrainLeavesP4W
+        \/ TrainLeavesB
+        \/ TrainLeavesD
+        \/ TrainLeavesF
 
 ------------------------------------
 
-Live == TRUE
+(* Liveness *)
+Live == /\ SF_vars(NewTrainA \/ NewTrainC \/ NewTrainG)
+		/\ SF_vars(SetPathA \/ SetPathC \/ SetPathG)
+    	/\ WF_vars(TrainLeavesA \/ TrainLeavesC \/ TrainLeavesG)
+    	/\ SF_vars(SetPathP1E \/ SetPathP2E \/ SetPathP3E \/ SetPathP4E \/ SetPathP1W \/ SetPathP2W \/ SetPathP3W \/ SetPathP4W)
+    	/\ WF_vars(TrainLeavesP1E \/ TrainLeavesP2E \/ TrainLeavesP3E \/ TrainLeavesP4E \/ TrainLeavesP1W \/ TrainLeavesP2W \/ TrainLeavesP3W \/ TrainLeavesP4W)
+    	/\ WF_vars(TrainLeavesB \/ TrainLeavesD \/ TrainLeavesF)
 
 (* Specification *)
 Spec == /\ Init
@@ -737,21 +770,21 @@ Spec == /\ Init
 ------------------------------------
 
 (* Invariants / Temporal properties to verify *)
-
 TypeInvariant == /\ LAW!TypeInvariant /\ LBW!TypeInvariant /\ LCW!TypeInvariant /\ LDW!TypeInvariant /\ LGE!TypeInvariant /\ LFE!TypeInvariant /\ L1E!TypeInvariant /\ L2E!TypeInvariant /\ L3E!TypeInvariant /\ L1W!TypeInvariant /\ L2W!TypeInvariant /\ L3W!TypeInvariant /\ L4W!TypeInvariant
                  /\ SA1!TypeInvariant /\ SA2!TypeInvariant /\ SB1!TypeInvariant /\ SB2!TypeInvariant /\ SC1!TypeInvariant /\ SC2!TypeInvariant /\ SC3!TypeInvariant /\ SD1!TypeInvariant /\ SD2!TypeInvariant /\ SF1!TypeInvariant /\ SG1!TypeInvariant /\ SH1!TypeInvariant
                  /\ A!TypeInvariant /\ B!TypeInvariant
                  /\ C!TypeInvariant /\ F!TypeInvariant
                  /\ D!TypeInvariant /\ G!TypeInvariant
                  /\ P1!TypeInvariant /\ P2!TypeInvariant /\ P3!TypeInvariant /\ P4!TypeInvariant
-                 /\ \A x \in DOMAIN busys: busys[x] \in {0,1}
-                 /\ \A x \in DOMAIN reserveds: reserveds[x] \in {0,1}
+                 /\ \A x \in DOMAIN busys: busys[x] \in {0, 1}
+                 /\ \A x \in DOMAIN reserveds: reserveds[x] \in {0, 1}
 
 (* Properties *)
+AlwaysNext == []<><<Next>>_vars
 
 ------------------------------------
 
 (* Theorems *)
-THEOREM Spec => []TypeInvariant
+THEOREM Spec => AlwaysNext
 
 ====================================

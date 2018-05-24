@@ -44,14 +44,12 @@ NewTrain(track) ==  /\ targetDestination = "empty" /\ targetPlatform = "empty"
                         \/ track \in WestOriginInTracks /\ targetDestination' = "F"
                     /\ count' = count + 1
 
-TrainLeaves ==  /\ targetDestination # "empty" /\ targetPlatform # "empty"
-                /\ targetPlatform' = "empty"
-                /\ targetDestination' = "empty"
+TrainLeaves ==  /\ targetPlatform # "empty"  /\ targetDestination # "empty"
+                /\ targetPlatform' = "empty" /\ targetDestination' = "empty"
                 /\ count' = count - 1
 
 TrainEnters(platform, destination) ==   /\ targetDestination = "empty"
-                                        /\ targetPlatform' = platform
-                                        /\ targetDestination' = destination
+                                        /\ targetPlatform' = platform /\ targetDestination' = destination
                                         /\ count' = count + 1
    
 Next == \/ NewTrain("A")
